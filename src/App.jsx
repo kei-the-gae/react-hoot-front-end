@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import SignupForm from './components/SignupForm/SignupForm';
 import SigninForm from './components/SigninForm/SigninForm';
 import * as authService from '../src/services/authService'; // import the authservice
+import HootList from './components/HootList/HootList';
 
 export const AuthedUserContext = createContext(null);
 
@@ -23,7 +24,10 @@ const App = () => {
         <NavBar user={user} handleSignout={handleSignout} />
         <Routes>
           {user ? (
-            <Route path="/" element={<Dashboard user={user} />} />
+            <>
+              <Route path="/" element={<Dashboard user={user} />} />
+              <Route path='/hoots' element={<HootList />} />
+            </>
           ) : (
             <Route path="/" element={<Landing />} />
           )}
