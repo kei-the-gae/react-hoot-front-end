@@ -49,9 +49,23 @@ const createComment = async (hootId, commentFormData) => {
             body: JSON.stringify(commentFormData),
         });
         return res.json();
-    } catch (error) {
-        console.log(error);
-    }
+    } catch (err) {
+        console.log(err);
+    };
+};
+
+const deleteHoot = async (hootId) => {
+    try {
+        const res = await fetch(`${BASE_URL}/${hootId}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+        return res.json();
+    } catch (err) {
+        console.log(err);
+    };
 };
 
 export {
@@ -59,4 +73,5 @@ export {
     show,
     create,
     createComment,
+    deleteHoot,
 };
