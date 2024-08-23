@@ -25,7 +25,6 @@ const App = () => {
     navigate('/hoots');
   };
 
-
   useEffect(() => {
     const fetchAllHoots = async () => {
       const hootsData = await hootService.index();
