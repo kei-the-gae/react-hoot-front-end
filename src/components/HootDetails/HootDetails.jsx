@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { AuthedUserContext } from '../../App';
 import CommentForm from '../CommentForm/CommentForm';
 import * as hootService from '../../services/hootService';
@@ -35,6 +35,7 @@ const HootDetails = ({ handleDeleteHoot }) => {
                 </p>
                 {hoot.author._id === user._id && (
                     <>
+                        <Link to={`/hoots/${hootId}/edit`}>Edit</Link>
                         <button onClick={() => handleDeleteHoot(hootId)}>Delete</button>
                     </>
                 )}
@@ -50,8 +51,7 @@ const HootDetails = ({ handleDeleteHoot }) => {
                     <article key={comment._id}>
                         <header>
                             <p>
-                                {comment.author.username} posted on
-                                {new Date(comment.createdAt).toLocaleDateString()}
+                                {comment.author.username} posted on {new Date(comment.createdAt).toLocaleDateString()}
                             </p>
                         </header>
                         <p>{comment.text}</p>
