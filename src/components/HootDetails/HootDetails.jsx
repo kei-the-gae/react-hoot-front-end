@@ -15,6 +15,8 @@ const HootDetails = () => {
         fetchHoot();
     }, [hootId]);
 
+    if (!hoot) return <main>Loading...</main>;
+
     return (
         <main>
             <header>
