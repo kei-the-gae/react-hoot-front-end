@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import Landing from './components/Landing/Landing';
@@ -7,11 +7,22 @@ import SignupForm from './components/SignupForm/SignupForm';
 import SigninForm from './components/SigninForm/SigninForm';
 import * as authService from '../src/services/authService'; // import the authservice
 import HootList from './components/HootList/HootList';
+import * as hootService from '../src/services/hootService';
 
 export const AuthedUserContext = createContext(null);
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser()); // using the method from authservice
+  const [hoots, setHoots] = useState([]);
+
+  useEffect(() => {
+    const fetchAllHoots = async () => {
+      const hootsData = await hootService.index();
+      setHoots(hootsData);
+    };
+    if (user) fetchAllHoots();
+  }, [user]);
+
 
   const handleSignout = () => {
     authService.signout();
@@ -26,7 +37,7 @@ const App = () => {
           {user ? (
             <>
               <Route path="/" element={<Dashboard user={user} />} />
-              <Route path='/hoots' element={<HootList />} />
+              <Route path='/hoots' element={<HootList hoots={hoots} />} />
             </>
           ) : (
             <Route path="/" element={<Landing />} />
